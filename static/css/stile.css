@@ -1,0 +1,107 @@
+body {
+    position: relative;
+    background-color: white!important;
+}
+
+.pb-3 {
+	padding-bottom: 0rem!important;
+}
+
+.pt-4, .py-4 {
+    padding-top: 1rem!important;
+}
+
+.form-control[readonly] {
+    background-color: #fff!important;
+    opacity: 1!important;
+}
+
+.col-8 {
+	background-color: white!important;
+}
+
+.nav-pills .nav-link {
+    background-color: white!important;
+}
+
+.nav-pills .nav-link.active {
+    color: #fff!important;
+    background-color: rgb(187, 21, 21)!important;
+}
+
+a {
+    color: rgb(187, 21, 21)!important;
+}
+
+.navbar-light .navbar-text a {
+    color: rgba(255, 255, 255)!important;
+}
+
+.pt-0, .py-0 {
+    padding-top: 8!important;
+}
+
+.bg-light {
+    background-color: rgb(107, 107, 107)!important;
+}
+
+.jumbotron {
+    background-color: #ff6060!important;
+}
+
+.btn-primary {
+    color: #fff!important;
+    border-color: rgb(187, 21, 21)!important;
+    background-color: rgb(187, 21, 21)!important;
+}
+
+.col-8 {
+    background-color: white!important;
+}
+
+.input-group-addon {
+    background-color: #fff!important;
+    color: rgb(187, 21, 21)!important;
+    border-color: rgb(187, 21, 21)!important;
+}
+
+.form-control {
+    border-color: rgb(187, 21, 21)!important;
+    background-color: rgba(230, 196, 196, 1)!important;
+}
+
+.navbar-light .navbar-text a {
+    color: rgba(255, 255, 255)!important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(255, 255, 255)!important;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: rgba(255, 255, 255)!important;
+}
+
+.navbar-light .navbar-brand {
+    color: rgba(255, 255, 255)!important;
+}
+
+.btn-primary:hover {
+    color: #fff!important;
+    background-color: #7b0000!important;
+    border-color: #7b0000!important;
+}
+
+.bianco {
+    color: white!important;
+}
+
+.nigga {
+    color: #353535!important;
+}
+
+.active {
+    color: #fff!important;
+    background-color: #7b0000!important;
+    border-color: #7b0000!important;
+}

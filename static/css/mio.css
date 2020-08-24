@@ -1,0 +1,71 @@
+body {
+    position: relative;
+    background-color: #fff7ef;
+}
+
+.pb-3 {
+	padding-bottom: 0rem!important;
+}
+
+.pt-4, .py-4 {
+    padding-top: 1rem!important;
+}
+
+.form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+
+.col-8 {
+	background-color: white!important;
+}
+
+.nav-pills .nav-link {
+    background-color: white;
+}
+
+.nav-pills .nav-link.active {
+    color: #fff;
+    background-color: #ff7600;
+}
+
+a {
+    color: #ff7600;
+}
+
+.pt-0, .py-0 {
+    padding-top: 8!important;
+}
+
+.bg-light {
+    background-color: rgb(255, 227, 203)!important;
+}
+
+.jumbotron {
+    background-color: rgb(255, 227, 203)!important;
+}
+
+.btn-primary {
+    color: #fff;
+    border-color: #ff7600;
+    background-color: #ff7600;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: background-color: rgb(255, 227, 203)!important;
+}
+
+.col-8 {
+    background-color: #fff7ef!important;
+}
+
+.input-group-addon {
+    background-color: #fff7ef;
+    color: #ff7600;
+    border-color: #ff7600;
+}
+
+.form-control {
+    border-color: #ff7600;
+    background-color: rgb(255, 227, 203)!important;
+}
