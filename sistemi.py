@@ -173,11 +173,12 @@ class Bitwise:
                 self.binario[key] = uno[1:]
             for i in range(4):
                 if (self.dizio['ip1'][i] & self.dizio['subnetmask'][i]) != (self.dizio['ip2'][i] & self.dizio['subnetmask'][i]):
-                    self.ritorno = 'NO'
+                    self.ritorno = 'No'
                     self.esci = True
                     break
         if not self.esci:
-            self.ritorno = 'SI'
+            self.ritorno = 'Si'
+        self.ritorno = 'La messa in and è andata a buon fine? {0}'.format(self.ritorno)
 
 class Subnetting:
     esci = False
@@ -187,6 +188,15 @@ class Subnetting:
     ritorno = ''
     n_host_max = 0
     n_sub_max  = 0
+
+    def pulisci(self):
+        self.esci = False
+        self.dizio   = {'ip' : [], 'subnetmask' : []}
+        self.address = {'ip' : '', 'subnetmask' : ''}
+        self.binario = {'ip' : '', 'subnetmask' : ''}
+        self.ritorno = ''
+        self.n_host_max = 0
+        self.n_sub_max  = 0
 
     def trova(self, indirizzo,dove):
         self.dizio[dove] = str(indirizzo).split('.')
@@ -207,6 +217,7 @@ class Subnetting:
             self.esci = True
 
     def __init__(self,indirizzo, subnetmask):
+        self.pulisci()
         self.trova(indirizzo,'ip')
         self.trova(subnetmask,'subnetmask')
         if not self.esci:
@@ -215,19 +226,25 @@ class Subnetting:
             copia = self.binario['subnetmask']
             #se si tratta di un indirizzo di classe A/B/C allora non da errore
             if whichclass < 4:
-                for j in range(whichclass-1):
-                    #prende solamente l ottetto/gli ottetti dedicati alla parte host
-                    self.binario['subnetmask'] = self.binario['subnetmask'][self.binario['subnetmask'].find('.')+1:]
                 #controlla se ci sono uno SOLO nei MSB(sx) e NON negli ottetti dedicati alla parte host
-                if '1' in self.binario['subnetmask'][self.binario['subnetmask'].find('0'):]:
+                self.binario['subnetmask'] = ''.join(map(lambda x: str(bin(x))[2:].rjust(8,'0'), self.dizio['subnetmask']))
+                #se ci sono uni dopo gli zeri la subnet è sbagliata
+                if not '1' in self.binario['subnetmask'][self.binario['subnetmask'].find('0'):]:
+                    print(self.binario['subnetmask'])
+                    #prende solamente l ottetto/gli ottetti dedicati alla parte host
+                    for j in range(whichclass):
+                            self.binario['subnetmask'] = self.binario['subnetmask'][8:]
+                    meno = {1:24,2:16,3:8}
+                    n_bit_1 = len(self.binario['subnetmask'][:self.binario['subnetmask'].find('0')])
+                    print(n_bit_1)
+                    self.n_sub_max = 2**n_bit_1
+                    self.n_host_max = (2**(meno[whichclass]-n_bit_1))-2
+                    self.finale = (self.n_host_max, self.n_sub_max)
+                else:
                     self.esci = True
-            if not self.esci:
-                self.binario['subnetmask'] = copia
-                self.finale = (self.n_host_max, self.n_sub_max, self.address, self.binario)
-            else:
+        if self.esci:
                 self.finale = 'ERRORE'
-        else:
-            self.finale = 'ERRORE'
+
 class Cidr:
     esci = False
     dizio   = {'ip' : [], 'subnetmask' : []}
@@ -238,6 +255,16 @@ class Cidr:
     fratto = 254
     n_bit_1 = 0
     finale = ()
+
+    def pulisci(self):
+        self.esci = False
+        self.dizio   = {'ip' : [], 'subnetmask' : ''}
+        self.binario = {'ip' : ''}
+        self.range_dec = []
+        self.range_bin = []
+        self.fratto = 254
+        self.n_bit_1 = 0
+        self.finale = ()
 
     def trova(self, indirizzo,dove):
         self.dizio[dove] = str(indirizzo).split('.')
@@ -257,94 +284,83 @@ class Cidr:
             self.esci = True
 
     def __init__(self,indirizzo,n_host):
+        self.pulisci()
         self.trova(indirizzo,'ip')
         whichclass = IdentificaClassi(indirizzo).future
-        n_indirizzi = round(n_host/self.fratto)
-        #non serve supernet
-        if n_host <= 254:
-            whichclass = 6#valore impossibile
-            self.range_dec_fin.append(indirizzo)
-            self.range_bin_fin.append('.'.join(map(lambda x: str(bin(x))[2:], self.dizio['ip'])))
-            self.finale = (self.range_dec_fin)
-        #situazione di errore classe c
-        elif whichclass==3 & n_host >= 65535:
-            whichclass = 7
-            self.finale = ('ERRORE')
-            self.esci = True
-        #se si tratta di un indirizzo di classe c
-        elif (not self.esci) & (whichclass==3):
-            #crea range ip
-            strano = False
-            insert = False
-            cont1 = 0
-            dove = 2
-            listacopia = self.dizio['ip'][2]
-            for i in range(n_indirizzi):
-                if (self.dizio['ip'][2] == 255) & (self.dizio['ip'][1] < 255):
-                    if (not insert):
-                        self.range_dec.append(str(self.dizio['ip'][0])+'.'+str(self.dizio['ip'][1])+'.'+str(self.dizio['ip'][2])+'.'+str(self.dizio['ip'][3]))
-                        insert = True
-                    self.range_dec.append(str(self.dizio['ip'][0])+'.'+str(self.dizio['ip'][1]+1)+'.'+str(cont1)+'.'+str(self.dizio['ip'][3]))
-                    cont1 += 1
-                    dove = 1
-                    self.dizio['ip'][2] = 0
-                    self.dizio['ip'][1] += 1
-
-                    self.range_dec.append(str(self.dizio['ip'][0]+1)+'.'+'0'+'.'+str(cont1)+'.'+str(self.dizio['ip'][3]))
-                    cont1 += 1
-                    dove = 0
-                elif (self.dizio['ip'][2] == 255) & (self.dizio['ip'][1] == 255) & (self.dizio['ip'][0] == 255):
-                    self.range_dec.append('è stato possibile creare solo {0} indirizzi'.format(i+1))
-                    strano = True
-                    break
-                else:
-                    self.range_dec.append(str(self.dizio['ip'][0])+'.'+str(self.dizio['ip'][1])+'.'+str(self.dizio['ip'][2]+i)+'.'+str(self.dizio['ip'][3]))
-                    self.dizio['ip'][2] += 1
-            self.dizio['ip'][2] = listacopia
-            print(self.range_dec)
-            if not strano:
-                for i in range(len(self.range_dec)):
-                    lista = []
-                    stringa = ''
-                    lista = str(self.range_dec[i]).split('.')
-                    for j in range(dove,3):
-                        stringa += str(bin(int(lista[j]))[2:].rjust(8,'0'))
-                    self.range_bin.append(stringa)
-            print(self.range_bin)
-            #trova le parti invariate in range
+        if not self.esci:
+            if (whichclass == 3) & (254 < n_host < 65535):
+                n_indirizzi = round(n_host/self.fratto)
+        		#crea range_dec
+                for i in range(n_indirizzi):
+                    lista_tmp = []
+                    lista_tmp.append(self.dizio['ip'][0])
+                    lista_tmp.append(self.dizio['ip'][1])
+                    lista_tmp.append(self.dizio['ip'][2]+i)
+                    self.range_dec.append(lista_tmp)
+                cont1 = 0
+                cont2 = 0
+        		#corregge il range_dec per eventuali errori
+                for i in range(n_indirizzi):
+                    #aumenta anche il secondo ottetto se il terzo è uguale a 255
+                    if (self.range_dec[i][2] > 255) & (self.range_dec[i][1] < 255) & (self.range_dec[i][0] < 223):
+                        self.range_dec[i][2] = cont1
+                        self.range_dec[i][1] += 1
+                        cont1 += 1
+        			#aumenta anche il primo ottetto se sia il terzo che il secondo ottetto sono uguali a 255
+                    elif (self.range_dec[i][2] > 255) & (self.range_dec[i][1] == 255) & (self.range_dec[i][0] < 223):
+                        self.range_dec[i][2] = cont1
+                        self.range_dec[i][1] = cont2
+                        self.range_dec[i][0] += 1
+                        cont1 += 1
+                        cont2 += 1
+                    elif (self.range_dec[i][2] > 255) & (self.range_dec[i][1] == 255) & (self.range_dec[i][0] == 223):
+                        del self.range_dec[i:]
+                        break
+            else:
+                self.esci = True
+        if not self.esci:
+            #per creare subnet ho bisogno di indirizzi in binario
+            string = ''
+            for i in range(3):
+                string += str(bin(self.range_dec[0][i]))[2:].rjust(8,'0')
+            self.range_bin.append(string)
+            string = ''
+            for i in range(3):
+                string += str(bin(self.range_dec[len(self.range_dec)-1][i]))[2:].rjust(8,'0')
+            self.range_bin.append(string)
             mask_result = ''
-            #itera primo-ultimo elemento di self.range_bin e fa un and bitwise
-            for i in range(8):
-                pass
-                #if self.range_bin[0] == self.range_bin[len(self.range_bin)-1] & cont1 == 0:
-                #    mask_result += '1'
-                #else:
-                #    mask_result += '0'
-            n_bit_1 = len(mask_result[:mask_result.find('0')])
-            #crea la subnetmask
-            for i in range(whichclass-1):
-                self.binario['subnetmask'] += '11111111.'
-            self.binario['subnetmask'] += '1'*n_bit_1+'0'*(8-n_bit_1)+'.'
-            for i in range(whichclass,4):
-                self.binario['subnetmask'] += '00000000.'
-            copia = ''
-            copia = self.binario['subnetmask'] = self.binario['subnetmask'][:35]
-        if (not self.esci) & (whichclass != (6,7)):
-                #restituisce ip, subnetmask, iprange, binari
-                self.finale = (self.range_dec_fin,self.dizio['subnetmask'])
-
+            for i in range(24):
+                if self.range_bin[0][i] == self.range_bin[1][i]:
+                    mask_result += '1'
+                else:
+                    mask_result += '0'
+            if mask_result.find('0') != -1:
+                self.n_bit_1 = len(mask_result[:mask_result.find('0')])
+            #se la maschera and è composto da 24 1 allora non è necessario fare il Cidr
+            elif mask_result == '111111111111111111111111':
+                self.n_bit_1 = 24
+                self.esci = True
+            if not self.esci:
+                self.dizio['subnetmask'] = '.'.join(map(lambda x: str(int(x,2)), re.findall('........','1'*self.n_bit_1+'0'*(32-self.n_bit_1))))
+                self.finale = ( str('.'.join(map(lambda x: str(x), self.range_dec[0]))+'.'+str(self.dizio['ip'][3])+'-'+'.'.join(map(lambda x: str(x), self.range_dec[len(self.range_dec)-1]))+'.'+str(self.dizio['ip'][3])) , self.dizio['subnetmask'])
+            else:
+                self.finale = ('Non è necessario fare il CIDR')
+        elif (whichclass == 3) & (n_host < 255):
+            self.finale = ('Non è necessario fare il CIDR per n_host minori di 255')
+        elif self.finale == ():
+            self.finale = 'ERRORE'
 #--------------------------------MAIN PROGRAM--------------------------------
 #IdentificaClassi(ip)------>classe a/b/c/d/e
 #print(IdentificaClassi('192.168.10.8').future)
 #print('\n')
 #Subnetting(ip, subnetmask)---->Controlla se la subnetmask è corretta e da max_host e n_subnet
-#print(Subnetting('120.168.10.8','255.255.255.0').finale)
-#print('\n')
+print(Subnetting('123.255.0.0','255.255.255.252').finale)
+print('\n')
 #Bitwise(ip1,ip2,subnetmask)------>Messa in And Bitwise ip1&subnetmask ip2&subnetmask
-    #print(Bitwise('192.168.10.8','192.168.10.2','255.255.255.128').ritorno)
-    #print('\n')
-#CIDR(ip/n bit a 1)
-#print(Cidr('199.250.253.0',3000).finale)
+#print(Bitwise('192.168.10.8','192.168.10.2','255.255.255.128').ritorno)
+#print('\n')
+#CIDR(ip, n bit a 1)
+#print(Cidr('223.5.25.0',255).finale)
 uscita = True
 while not uscita:
     ip = input('Inserisci indirizzo ip(192.168.1.1): ')

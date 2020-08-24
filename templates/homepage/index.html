@@ -1,22 +1,29 @@
 {% load static %}
 <html>
-  <head>
-    <title> Sistemi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
-    <!--Bootstrapp css-->
-    <link rel="stylesheet" href="{% static "bootstrap-css/bootstrap.min.css" %}">
-    <!--Modified CSS-->
-    <link rel="stylesheet" href="{% static "css/mio.css" %}">
-  </head>
-  <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="https://github.com/EnricoBiancotto/webapp.py" target="_blank"><img src="{% static "webapp.py-master/mark-github.svg" %}" width="30" height="30" alt=""></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+
+<head>
+  <title> Sistemi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+  <!--Bootstrapp css-->
+  <link rel="stylesheet" href="{% static "bootstrap-css/bootstrap.min.css" %}">
+  <!--Modified CSS-->
+  <link rel="stylesheet" href="{% static "css/stile.css" %}">
+  <!--Favicon-->
+  <link rel="icon" href="{% static "webapp/favicon.ico" %}">
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="https://github.com/EnricoBiancotto/webapp.py" target="_blank"><img
+          src="{% static "webapp/github.png" %}" width="30" height="30" alt=""></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
@@ -27,114 +34,136 @@
           </li>
         </ul>
       </div>
-      <!--close navbar-->
-    </nav>
-    <div class="container pt-3"><!--open div container-->
-      <div class="jumbotron">
-        <h1 class="display-3">Classificatore di IP</h1>
-        <footer class="blockquote-footer">Creato da <cite title="Source Title">Enrico Biancotto</cite> e da <cite title="Source Title">Matteo Casonato</cite></footer>
-        <hr class="my-4">
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="https://github.com/EnricoBiancotto/webapp.py" target="_blank" role="button">Passa a GitHub</a>
-        </p>
-        <!--close jumbotron-->
-      </div>
-      <h1 id="begin">Progetto</h1>
-      <br>
-      {% block principale %}
-      <!--Start scrollspy-->
-      <div class="bd-example">
-        <div class="row">
-          <div class="col-4">
-            <nav style="height: 450;" id="navbar-example3" class="navbar navbar-light bg-light flex-column" >
-              <a class="navbar-brand" href="#begin">Menù</a>
+    </div>
+    <!--close navbar-->
+  </nav>
+  <div class="jumbotron text-center">
+    <h1 class="display-3 nigga">Classificatore di IP</h1>
+    <footer class="blockquote-footer nigga">Creato da <cite title="Source Title">Enrico Biancotto</cite></footer>
+    <hr class="my-4">
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="https://github.com/EnricoBiancotto/webapp.py" target="_blank"
+        role="button">Passa a GitHub</a>
+    </p>
+    <!--close jumbotron-->
+  </div>
+  <div class="container pt-3">
+    <!--open div container-->
+    <h1 id="begin">Progetto</h1>
+    <br>
+    {% block principale %}
+    <!--Start scrollspy-->
+    <div class="bd-example">
+      <div class="row">
+        <div class="col-4">
+          <nav style="height: 600;" id="navbar-example3" class="navbar navbar-light bg-light flex-column">
+            <a class="navbar-brand bianco" href="#begin">Menù</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link" href="#item-1">Intro IPv4</a>
               <nav class="nav nav-pills flex-column">
-                <a class="nav-link" href="#item-1">Intro IPv4</a>
-                <nav class="nav nav-pills flex-column">
-                  <a class="nav-link ml-3 my-1" href="#item-1-1">Classi</a>
-                </nav>
-                <a class="nav-link" href="#item-2">Intro Subnetting</a>
-                <nav class="nav nav-pills flex-column">
-                  <a class="nav-link ml-3 my-1" href="#item-2-1">Subnet</a>
-                  <a class="nav-link ml-3 my-1" href="#item-2-2">Messa in and</a>
-                </nav>
-                <a class="nav-link" href="#item-3">Intro CIDR</a>
-                <nav class="nav nav-pills flex-column">
-                  <a class="nav-link ml-3 my-1" href="#item-3-1">CIDR</a>
-                </nav>
+                <a class="nav-link ml-3 my-1" href="#item-1-1">Classi</a>
               </nav>
-              <br><br>
+              <a class="nav-link" href="#item-2">Intro Subnetting</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ml-3 my-1" href="#item-2-1">Subnet</a>
+                <a class="nav-link ml-3 my-1" href="#item-2-3">Calcolo Subnet Mask</a>
+                <a class="nav-link ml-3 my-1" href="#item-2-2">Messa in and</a>
+              </nav>
+              <a class="nav-link" href="#item-3">Intro CIDR</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ml-3 my-1" href="#item-3-1">CIDR</a>
+              </nav>
             </nav>
-          </div>
-          <div class="col-8">
-            <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2" style="height: 450;overflow-y: scroll;">
-              <h4 id="item-1">
-                <!--Intro IPv4-->
-                <p>Cos'è un indirizzo IP?</p>
-              </h4>
-              {% block ipv4 %}
+            <br><br>
+          </nav>
+        </div>
+        <div class="col-8">
+          <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2"
+            style="height: 600;overflow-y: scroll;">
+            <h4 id="item-1">
+              <!--Intro IPv4-->
+              <p>Cos'è un indirizzo IP?</p>
+              <p>What is an IP address</p>
+            </h4>
+            {% block ipv4 %}
+            {% endblock %}
+            <h4 id="item-1-1">
+              <!--Classi IP-->
+              <p>Trova classe dell'indirizzo IP</p>
+              <p>Find a class of IP address</p>
+            </h4>
+            <h5>
+              {% block classi %}
               {% endblock %}
-              <h4 id="item-1-1">
-                <!--Classi IP-->
-                <p>Trova classe dell'indirizzo IP</p>
-                </h4>
-              <h5>
-                {% block classi %}
-                {% endblock %}
-              </h5>
-              <h4 id="item-2">
-                <!--Intro Subnetting-->
-                <p>Cos'è una subnet?</p>
-              </h4>
-              {% block subnetting %}
+            </h5>
+            <h4 id="item-2">
+              <!--Intro Subnetting-->
+              <p>Cos'è una subnet?</p>
+              <p>What is a subnet?</p>
+            </h4>
+            {% block subnetting %}
+            {% endblock %}
+            <h4 id="item-2-1">
+              <!--Trova Subnet-->
+              <p>Calcolo della subnet</p>
+              <p>Computation of subnet</p>
+            </h4>
+            <h5>
+              {% block trova_subnet %}
               {% endblock %}
-              <h4 id="item-2-1">
-                <!--Trova Subnet-->
-                <p>Calcolo della subnet</p>
-              </h4>
-              <h5>
-                {% block trova_subnet %}
-                {% endblock %}
-              </h5>
-              <h4 id="item-2-2">
-                <!--Messa in And-->
-                <p>Messa in AND</p>
-              </h4>
-              <h5>
-                {% block bitwise %}
-                {% endblock %}
-              </h5>
-              <h4 id="item-3">
-                <!--Intro CIDR-->
+            </h5>
+            <h4 id="item-2-3">
+              <!--Calcolo Subnet 2 metodo-->
+              <p>Subnet via N. Subnet</p>
+            </h4>
+            <h5>
+              {% block subnet2 %}
+              {% endblock %}
+            </h5>
+            <h4 id="item-2-2">
+              <!--Messa in And-->
+              <p>Messa in AND</p>
+              <p>Put in AND</p>
+            </h4>
+            <h5>
+              {% block bitwise %}
+              {% endblock %}
+            </h5>
+            <h4 id="item-3">
+              <!--Intro CIDR-->
               <p>Intro CIDR</p>
-              </h4>
-              {% block intro_cidr %}
-              {% endblock %}
-              <h4 id="item-3-1">
-                <!--CIDR-->
-                <p>Calcolo CIDR</p>
-              </h4>
-              <h5>
+            </h4>
+            {% block intro_cidr %}
+            {% endblock %}
+            <h4 id="item-3-1">
+              <!--CIDR-->
+              <p>Calcolo CIDR</p>
+              <p>Computation of CIDR</p>
+            </h4>
+            <h5>
               {% block cidr %}
               {% endblock %}
-              </h5>
-            </div>
+            </h5>
           </div>
         </div>
-      </div><!--End scrollspy-->
-      <br><br><br><br>
-      {% endblock %}
+      </div>
     </div>
-    <!--Footer-->
-    <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light pt-0" >
+    <!--End scrollspy-->
+    <br><br><br><br>
+    {% endblock %}
+  </div>
+  <!--Footer-->
+  <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light pt-0">
+    <div class="container">
       <span class="navbar-text">
-      	<a> Copyright &#9400 2017 ITTS V.Volterra all rights riserved </a>
+        <a class="bianco"> Copyright &#9400 2017 ITTS V.Volterra all rights riserved </a>
       </span>
-    </nav>
-    <!--Bootstrapp js-->
-    <script src="{% static "js/mio.js" %}"></script>
-    <script src="{% static "bootstrap-js/jquery-3.2.1.slim.min.js" %}"></script>
-    <script src="{% static "bootstrap-js/popper.min.js" %}"></script>
-    <script src="{% static "bootstrap-js/bootstrap.min.js" %}"></script>
-  </body>
+    </div>
+  </nav>
+  <!--Bootstrapp js-->
+  <script src="{% static "bootstrap-js/jquery-3.2.1.slim.min.js" %}"></script>
+  <script src="{% static "bootstrap-js/popper.min.js" %}"></script>
+  <script src="{% static "bootstrap-js/bootstrap.min.js" %}"></script>
+</body>
+
 </html>
